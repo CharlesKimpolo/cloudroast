@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
+from cafe.engine.clients.rest import RestClient
 from cafe.drivers.unittest.fixtures import BaseTestFixture
 from cloudcafe.images.config import ImagesConfig
 from cloudcafe.auth.provider import AuthProvider
@@ -25,6 +26,7 @@ class ImagesV2Fixture(BaseTestFixture):
     """
     @summary: Base fixture for Images V2 API tests
     """
+
     @classmethod
     def setUpClass(cls):
         super(ImagesV2Fixture, cls).setUpClass()
@@ -39,6 +41,9 @@ class ImagesV2Fixture(BaseTestFixture):
         cls.api_client = ImagesV2Client(cls.images_endpoint,
                                         access_data.token.id_,
                                         'json', 'json')
+        cls.rest_client = RestClient()
+        cls.rest_client.default_headers = {
+            'X-Auth-Token': access_data.token.id_}
 
     @classmethod
     def tearDownClass(cls):

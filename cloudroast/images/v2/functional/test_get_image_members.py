@@ -14,31 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
+
 from cafe.drivers.unittest.decorators import tags
 from cloudroast.images.v2.fixtures import ImagesV2Fixture
 
 
-class GetImagesSchemaTest(ImagesV2Fixture):
-    """Test the retrieval of schema details for images."""
+class GetImageMembersTest(ImagesV2Fixture):
 
     @tags(type='smoke')
-    def test_get_image_schema(self):
-        """Get schema that represents an image entity.
+    def test_get_members_of_image(self):
+        """ Get the members of an image.
 
-        1) Get image schema
-        2) Verify the response status code is 200
+        1) Get members list for an image
+        2) Verify the response code is 200
+        3) Verify the response body is as expected
         """
 
-        response = self.api_client.get_image_schema()
-        self.assertEqual(200, response.status_code)
+    @tags(type='negative')
+    def test_get_members_for_a_private_image_as_non_admin(self):
+        """ Get the members of an image.
 
-    @tags(type='smoke')
-    def test_get_images_schema(self):
-        """Get schema that represents an images entity.
-
-        1) Get images schema
-        2) Verify the response status code is 200
+        1) Get members list for an image
+        2) Verify the response code is 403
         """
-
-        response = self.api_client.get_images_schema()
-        self.assertEqual(200, response.status_code)

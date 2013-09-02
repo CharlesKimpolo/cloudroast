@@ -13,32 +13,30 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
-
 from cafe.drivers.unittest.decorators import tags
 from cloudroast.images.v2.fixtures import ImagesV2Fixture
 
 
-class GetImagesSchemaTest(ImagesV2Fixture):
-    """Test the retrieval of schema details for images."""
-
+class GetImageFileTest(ImagesV2Fixture):
     @tags(type='smoke')
-    def test_get_image_schema(self):
-        """Get schema that represents an image entity.
+    def test_download_image_data(self):
+        """Downloads binary data for an image.
 
-        1) Get image schema
-        2) Verify the response status code is 200
+        1) Register new image
+        2) Verify response code is 200
+        3) Upload image with an image file
+        4) Download binary image data
+        5) Verify response code is 200
+        6) Verify that the downloaded image data is same as uploaded binary
+        image data
         """
 
-        response = self.api_client.get_image_schema()
-        self.assertEqual(200, response.status_code)
+    @tags(type='negative')
+    def test_download_image_without_data:
+        """Download binary data for an image that has none.
 
-    @tags(type='smoke')
-    def test_get_images_schema(self):
-        """Get schema that represents an images entity.
-
-        1) Get images schema
-        2) Verify the response status code is 200
+        1) Register new image
+        2) Verify response code is 200
+        4) Download binary image data
+        5) Verify response code is 404
         """
-
-        response = self.api_client.get_images_schema()
-        self.assertEqual(200, response.status_code)

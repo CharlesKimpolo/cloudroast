@@ -14,31 +14,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
+
 from cafe.drivers.unittest.decorators import tags
 from cloudroast.images.v2.fixtures import ImagesV2Fixture
 
 
-class GetImagesSchemaTest(ImagesV2Fixture):
-    """Test the retrieval of schema details for images."""
+class DeleteImageTagTest(ImagesV2Fixture):
 
     @tags(type='smoke')
-    def test_get_image_schema(self):
-        """Get schema that represents an image entity.
+    def test_delete_tag_from_image(self):
+        """ Delete tag from an image.
 
-        1) Get image schema
-        2) Verify the response status code is 200
+        1) Delete a tag from existing image
+        2) Verify the response code is 204
+        3) Verify that the deleted tag is not in the list of image tags.
         """
 
-        response = self.api_client.get_image_schema()
-        self.assertEqual(200, response.status_code)
+    @tags(type='negative')
+    def test_delete_nonexistent_tag_from_image(self):
+        """ Delete nonexistent tag from an image.
 
-    @tags(type='smoke')
-    def test_get_images_schema(self):
-        """Get schema that represents an images entity.
-
-        1) Get images schema
-        2) Verify the response status code is 200
+        1) Delete a nonexistent tag from existing image
+        2) Verify the response code is 400
+        3) Verify that the deleted tag is not in the list of image tags.
         """
-
-        response = self.api_client.get_images_schema()
-        self.assertEqual(200, response.status_code)
